@@ -200,7 +200,11 @@ In the code chunk below, create a vector (using `c()`, as above) stored as `some
 ```{r}
 # Your code here: 
 
+some_dates <- c(06271989, 12221990, 03221959, 06241955)
+some_dates_converted <- mdy(some_dates)
+some_dates_converted
 
+class(some_dates_converted)
 ```
 
 #### 3C. Follow me
@@ -244,6 +248,16 @@ Starting from the `lakers` dataset, create a new dataset called `gasol_hookshots
 ```{r}
 # Your code here: 
 
+gasol_hookshots <- lakers %>% 
+  filter(player == "Pau Gasol" & type == "hook") %>% 
+  mutate(Date = ymd(date)) %>% 
+  mutate(month = month(Date))
+
+hooks_by_month <- gasol_hookshots %>% 
+  count(month) %>% 
+  rename(hooks_attempted = n)
+
+hooks_by_month
 
 ```
 
@@ -294,7 +308,10 @@ Note: If you add another condition within `case_when()` that is `TRUE ~ "some th
 ```{r}
 # Your code here: 
 
-
+storms_danger <- storms %>% 
+  mutate(danger = case_when(
+    status == "hurricane" ~ "high",
+    TRUE ~ "moderate"))
 ```
 
 ## 5. Practice version control w/git
